@@ -1,5 +1,6 @@
 package ru.job4j.dreamjob.repository;
 
+import org.springframework.stereotype.Repository;
 import ru.job4j.dreamjob.model.Vacancy;
 
 import java.time.LocalDateTime;
@@ -8,7 +9,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
-public class MemoryVacancyRepository implements VacancyRepository {
+public class MemoryVacancyRepository implements VacancyRepository, SearchRepository<Vacancy> {
     private static final MemoryVacancyRepository INSTANCE = new MemoryVacancyRepository();
     private int nextId = 1;
     private final Map<Integer, Vacancy> vacancies = new HashMap<>();
@@ -57,5 +58,4 @@ public class MemoryVacancyRepository implements VacancyRepository {
     public void deleteById(int id) {
         vacancies.remove(id);
     }
-
 }
