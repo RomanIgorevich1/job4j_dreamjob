@@ -13,9 +13,21 @@
             integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V"
             crossorigin="anonymous"></script>
 
-    <title>Работа мечты!</title>
+    <title>Список кандидатов</title>
 </head>
 <body>
+    <div class="container-fluid p-0">
+        <nav class="navbar navbar-expend-lg navbar-dark bg-dark">
+            <div class="container">
+                <a class="navbar-brand" href="/">Job4jDreamJob</a>
+                <div class="navbar-nav">
+                    <a class="nav-item nav-link" href="/">Главная</a>
+                    <a class="nav-item nav-link" th:href="@{/vacancies}">Вакансии</a>
+                    <a  class="nav-item nav-link active" th:href="@{/candidates}">Кандидаты</a>
+                </div>
+            </div>
+        </nav>
+    </div>
     <div class="container">
         <div class="row">
             <table class="table">
