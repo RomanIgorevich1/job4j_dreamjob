@@ -18,4 +18,9 @@ public class CandidateController {
         model.addAttribute("candidates", search.findAll());
         return "candidates/list";
     }
+
+    @GetMapping("/create")
+    public String getCreatePage() {
+        return "candidates/create";
+    }
 }
