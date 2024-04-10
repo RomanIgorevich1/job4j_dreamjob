@@ -7,5 +7,5 @@ public interface CandidateRepository {
 
     boolean update(Candidate candidate);
 
-    void deleteById(int id);
+    boolean deleteById(int id);
 }

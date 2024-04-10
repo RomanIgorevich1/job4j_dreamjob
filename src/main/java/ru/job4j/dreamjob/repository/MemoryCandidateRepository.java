@@ -19,10 +19,10 @@ public class MemoryCandidateRepository implements CandidateRepository, SearchRep
 
 
     private MemoryCandidateRepository() {
-        save(new Candidate(0, "name1", "description", LocalDateTime.now()));
-        save(new Candidate(0, "name2", "description", LocalDateTime.now()));
-        save(new Candidate(0, "name3", "description", LocalDateTime.now()));
-        save(new Candidate(0, "name4", "description", LocalDateTime.now()));
+        save(new Candidate(0, "name1", "description1", LocalDateTime.now()));
+        save(new Candidate(0, "name2", "description2", LocalDateTime.now()));
+        save(new Candidate(0, "name3", "description3", LocalDateTime.now()));
+        save(new Candidate(0, "name4", "description4", LocalDateTime.now()));
     }
 
     public static MemoryCandidateRepository getInstance() {
@@ -46,8 +46,8 @@ public class MemoryCandidateRepository implements CandidateRepository, SearchRep
     }
 
     @Override
-    public void deleteById(int id) {
-        candidates.remove(id);
+    public boolean deleteById(int id) {
+        return candidates.remove(id) != null;
     }
 
     @Override
