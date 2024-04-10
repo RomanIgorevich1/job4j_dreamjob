@@ -1,6 +1,5 @@
 package ru.job4j.dreamjob.repository;
 
-import org.springframework.stereotype.Repository;
 import ru.job4j.dreamjob.model.Vacancy;
 
 import java.time.LocalDateTime;
@@ -55,7 +54,7 @@ public class MemoryVacancyRepository implements VacancyRepository, SearchReposit
     }
 
     @Override
-    public void deleteById(int id) {
-        vacancies.remove(id);
+    public boolean deleteById(int id) {
+       return vacancies.remove(id) != null;
     }
 }
