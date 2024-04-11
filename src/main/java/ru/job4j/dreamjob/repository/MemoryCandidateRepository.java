@@ -10,12 +10,12 @@ import java.util.Map;
 import java.util.Optional;
 
 @Repository
-public class MemoryCandidateRepository implements CandidateRepository, SearchRepository<Candidate> {
+public class MemoryCandidateRepository implements CandidateRepository {
 
     private static final MemoryCandidateRepository INSTANCE = new MemoryCandidateRepository();
     private int nextId = 1;
 
-    private Map<Integer, Candidate> candidates = new HashMap<>();
+    private final Map<Integer, Candidate> candidates = new HashMap<>();
 
 
     private MemoryCandidateRepository() {
