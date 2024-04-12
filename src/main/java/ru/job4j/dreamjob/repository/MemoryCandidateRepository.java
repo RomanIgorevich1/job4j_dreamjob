@@ -21,10 +21,10 @@ public class MemoryCandidateRepository implements CandidateRepository {
 
 
     private MemoryCandidateRepository() {
-        save(new Candidate(0, "name1", "description1", LocalDateTime.now()));
-        save(new Candidate(0, "name2", "description2", LocalDateTime.now()));
-        save(new Candidate(0, "name3", "description3", LocalDateTime.now()));
-        save(new Candidate(0, "name4", "description4", LocalDateTime.now()));
+        save(new Candidate(0, "name1", "description1", LocalDateTime.now(), 1));
+        save(new Candidate(0, "name2", "description2", LocalDateTime.now(), 2));
+        save(new Candidate(0, "name3", "description3", LocalDateTime.now(), 3));
+        save(new Candidate(0, "name4", "description4", LocalDateTime.now(), 1));
     }
     @Override
     public Candidate save(Candidate candidate) {
@@ -38,7 +38,8 @@ public class MemoryCandidateRepository implements CandidateRepository {
                 new Candidate(oldCandidate.getId(),
                         candidate.getName(),
                         candidate.getDescription(),
-                        candidate.getCreationDate())) != null;
+                        candidate.getCreationDate(),
+                        candidate.getCityId())) != null;
 
     }
 
