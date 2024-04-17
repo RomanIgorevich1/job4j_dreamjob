@@ -3,7 +3,6 @@ package ru.job4j.dreamjob.repository;
 import net.jcip.annotations.ThreadSafe;
 import org.springframework.stereotype.Repository;
 import ru.job4j.dreamjob.model.Candidate;
-
 import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.Optional;
@@ -21,10 +20,10 @@ public class MemoryCandidateRepository implements CandidateRepository {
 
 
     private MemoryCandidateRepository() {
-        save(new Candidate(0, "name1", "description1", LocalDateTime.now(), 1));
-        save(new Candidate(0, "name2", "description2", LocalDateTime.now(), 2));
-        save(new Candidate(0, "name3", "description3", LocalDateTime.now(), 3));
-        save(new Candidate(0, "name4", "description4", LocalDateTime.now(), 1));
+        save(new Candidate(0, "name1", "description1", LocalDateTime.now(), 1, 0));
+        save(new Candidate(0, "name2", "description2", LocalDateTime.now(), 2, 0));
+        save(new Candidate(0, "name3", "description3", LocalDateTime.now(), 3, 0));
+        save(new Candidate(0, "name4", "description4", LocalDateTime.now(), 1, 0));
     }
     @Override
     public Candidate save(Candidate candidate) {
@@ -39,7 +38,8 @@ public class MemoryCandidateRepository implements CandidateRepository {
                         candidate.getName(),
                         candidate.getDescription(),
                         candidate.getCreationDate(),
-                        candidate.getCityId())) != null;
+                        candidate.getCityId(),
+                        candidate.getFileId())) != null;
 
     }
 
