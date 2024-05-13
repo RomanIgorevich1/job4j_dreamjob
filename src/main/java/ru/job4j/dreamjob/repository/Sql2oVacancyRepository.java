@@ -15,7 +15,6 @@ public class Sql2oVacancyRepository implements VacancyRepository {
     public Sql2oVacancyRepository(Sql2o sql2o) {
         this.sql2o = sql2o;
     }
-
     @Override
     public Vacancy save(Vacancy vacancy) {
         try (var connection = sql2o.open()) {
