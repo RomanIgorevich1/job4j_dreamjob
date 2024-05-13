@@ -49,7 +49,7 @@ public class Sql2oCandidateRepository implements CandidateRepository {
                     .addParameter("name", candidate.getName())
                     .addParameter("description", candidate.getDescription())
                     .addParameter("creationDate", candidate.getCreationDate())
-                    .addParameter("citiId", candidate.getCityId())
+                    .addParameter("cityId", candidate.getCityId())
                     .addParameter("fileId", candidate.getFileId())
                     .addParameter("id", candidate.getId());
             int affectedRows = query.executeUpdate().getResult();
