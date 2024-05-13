@@ -1,23 +1,22 @@
 package ru.job4j.dreamjob.service;
 
-import net.jcip.annotations.ThreadSafe;
 import org.springframework.stereotype.Service;
 import ru.job4j.dreamjob.dto.FileDto;
 import ru.job4j.dreamjob.model.Candidate;
 import ru.job4j.dreamjob.model.File;
 import ru.job4j.dreamjob.repository.CandidateRepository;
+
 import java.util.Collection;
 import java.util.Optional;
 
-@ThreadSafe
 @Service
 public class SimpleCandidateService implements CandidateService {
+
+    private final CandidateRepository candidateRepository;
     private final FileService fileService;
 
-    private  final CandidateRepository candidateRepository;
-
-    private SimpleCandidateService(CandidateRepository candidateRepository, FileService fileService) {
-        this.candidateRepository = candidateRepository;
+    public SimpleCandidateService(CandidateRepository sql2oCandidateService, FileService fileService) {
+        this.candidateRepository = sql2oCandidateService;
         this.fileService = fileService;
     }
 
@@ -26,7 +25,6 @@ public class SimpleCandidateService implements CandidateService {
         saveNewFile(candidate, image);
         return candidateRepository.save(candidate);
     }
-
     private void saveNewFile(Candidate candidate, FileDto image) {
         File file = fileService.save(image);
         candidate.setFileId(file.getId());
