@@ -9,7 +9,6 @@ import org.sql2o.converters.Converter;
 import org.sql2o.converters.ConverterException;
 import org.sql2o.quirks.NoQuirks;
 import org.sql2o.quirks.Quirks;
-
 import javax.sql.DataSource;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
