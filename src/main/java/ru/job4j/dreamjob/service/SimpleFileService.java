@@ -17,8 +17,9 @@ public class SimpleFileService implements FileService {
     private final FileRepository fileRepository;
     private final String storageDirectory;
 
-    public SimpleFileService(FileRepository fileRepository, @Value("${file.directory}") String storageDirectory) {
-        this.fileRepository = fileRepository;
+    public SimpleFileService(FileRepository sql2oFileRepository,
+                             @Value("${file.directory}") String storageDirectory) {
+        this.fileRepository = sql2oFileRepository;
         this.storageDirectory = storageDirectory;
         createStorageDirectory(storageDirectory);
     }
@@ -51,7 +52,7 @@ public class SimpleFileService implements FileService {
     }
 
     @Override
-    public Optional<FileDto> findById(int id) {
+    public Optional<FileDto> getFindById(int id) {
         Optional<File> fileDtoOptional = fileRepository.findById(id);
         if (fileDtoOptional.isEmpty()) {
             return Optional.empty();
