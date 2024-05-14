@@ -14,7 +14,6 @@ import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Optional;
 import java.util.Properties;
-
 import static java.time.LocalDateTime.now;
 import static java.util.Collections.emptyList;
 import static java.util.Optional.empty;

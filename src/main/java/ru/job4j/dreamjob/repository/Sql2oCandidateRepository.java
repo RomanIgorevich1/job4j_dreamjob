@@ -1,6 +1,8 @@
 package ru.job4j.dreamjob.repository;
 
 import org.springframework.stereotype.Repository;
+import org.sql2o.Connection;
+import org.sql2o.Query;
 import org.sql2o.Sql2o;
 import ru.job4j.dreamjob.model.Candidate;
 
@@ -36,14 +38,11 @@ public class Sql2oCandidateRepository implements CandidateRepository {
 
     @Override
     public boolean deleteById(int id) {
-        boolean rsl = false;
-        try (var connection = sql2o.open()) {
-            var query = connection.createQuery("DELETE FROM candidates WHERE id = :id");
-            query.addParameter("id", id);
-            query.executeUpdate();
-            rsl = connection.getResult() != 0;
+        try (Connection connection = sql2o.open()) {
+            Query query = connection.createQuery("DELETE FROM candidates WHERE id = :id");
+            query.addParameter("id", id).executeUpdate();
+            return connection.getResult() != 0;
         }
-        return rsl;
     }
 
     @Override
@@ -52,7 +51,7 @@ public class Sql2oCandidateRepository implements CandidateRepository {
             var sql = """
                     UPDATE candidates
                     SET name = :name, description = :description,
-                        city_id = :cityId, file_id = :fileId
+                       city_id = :cityId, file_id = :fileId
                     WHERE id = :id
                     """;
             var query = connection.createQuery(sql)
