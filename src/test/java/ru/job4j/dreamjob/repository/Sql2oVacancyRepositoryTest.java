@@ -115,7 +115,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
                  new Vacancy(0, "title", "description", creationDate,
                          true, 1, file.getId()));
          var updatedVacancy = new Vacancy(
-                 vacancy.getId(), "new title", "new description", creationDate.plusDays(1),
+                 vacancy.getId(), "new title", "new description", creationDate,
                  !vacancy.getVisible(), 1, file.getId()
          );
          var isUpdated = sql2oVacancyRepository.update(updatedVacancy);
