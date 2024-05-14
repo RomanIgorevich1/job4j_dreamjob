@@ -107,7 +107,7 @@ public class Sql2oCandidateRepositoryTest {
         Candidate candidate  = sql2oCandidateRepository.save(new Candidate(0, "Roman",
                         "description1", creationDate, 2, file.getId()));
         Candidate updatedCandidate = new Candidate(candidate.getId(), "Ivan",
-                "new description", creationDate.plusDays(4), candidate.getCityId(), file.getId()
+                "new description", creationDate, candidate.getCityId(), file.getId()
         );
         var isUpdated = sql2oCandidateRepository.update(updatedCandidate);
         var savedVacancy = sql2oCandidateRepository.findById(updatedCandidate.getId()).get();
