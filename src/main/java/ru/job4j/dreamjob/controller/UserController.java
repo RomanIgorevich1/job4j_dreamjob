@@ -44,5 +44,4 @@ public class UserController {
         }
         return "redirect:/vacancies";
     }
-
 }
