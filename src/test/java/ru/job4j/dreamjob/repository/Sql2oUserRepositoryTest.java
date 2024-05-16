@@ -5,7 +5,7 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.sql2o.Sql2o;
 import ru.job4j.dreamjob.configuration.DatasourceConfiguration;
-
+import static java.util.Optional.empty;
 import ru.job4j.dreamjob.model.User;
 import javax.sql.DataSource;
 import java.io.InputStream;
@@ -66,10 +66,8 @@ public class Sql2oUserRepositoryTest {
     public void whenSameEmailThenErr() {
         User user1 = sql2oUserRepository.save(
                 new User(0, "email1", "name1", "password1")).get();
-        User user2 = sql2oUserRepository.save(
-                new User(0, "email1", "name2", "password2")).get();
         assertThat(sql2oUserRepository.findByEmailAndPassword(user1.getEmail(), user1.getPassword())).isNotEmpty();
-        assertThat(sql2oUserRepository.findByEmailAndPassword(user2.getEmail(), user2.getPassword())).isEmpty();
+        assertThat(sql2oUserRepository.save(
+                new User(0, "email1", "name2", "password2"))).isEqualTo(empty());
     }
-
 }

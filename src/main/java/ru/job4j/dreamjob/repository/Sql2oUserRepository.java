@@ -31,10 +31,11 @@ public class Sql2oUserRepository implements UserRepository {
                     .addParameter("password", user.getPassword());
             int generateId = query.executeUpdate().getKey(Integer.class);
             user.setId(generateId);
+            return Optional.of(user);
         } catch (Exception exception) {
             LOGGER.error("\"Пользователь с такой почтой уже существует\"");
         }
-        return Optional.of(user);
+        return Optional.empty();
     }
 
     @Override
