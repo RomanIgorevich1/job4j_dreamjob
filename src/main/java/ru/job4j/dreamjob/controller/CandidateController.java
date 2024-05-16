@@ -9,7 +9,6 @@ import ru.job4j.dreamjob.model.Candidate;
 import ru.job4j.dreamjob.model.User;
 import ru.job4j.dreamjob.service.CandidateService;
 import ru.job4j.dreamjob.service.CityService;
-
 import javax.servlet.http.HttpSession;
 
 @Controller

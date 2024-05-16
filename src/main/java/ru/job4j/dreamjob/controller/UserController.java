@@ -5,7 +5,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import ru.job4j.dreamjob.model.User;
 import ru.job4j.dreamjob.service.UserService;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -18,19 +17,24 @@ public class UserController {
         this.userService = userService;
     }
 
-    @GetMapping("/register")
-    public String getRegistrationPage(Model model, HttpSession session) {
+    private void getUser(Model model, HttpSession session) {
         var user = (User) session.getAttribute("user");
         if (user == null) {
             user = new User();
             user.setName("Гость");
         }
         model.addAttribute("user", user);
+    }
+
+    @GetMapping("/register")
+    public String getRegistrationPage(Model model, HttpSession session) {
+        getUser(model, session);
         return "users/register";
     }
 
     @PostMapping("/register")
-    public String register(Model model, @ModelAttribute User user) {
+    public String register(Model model, @ModelAttribute User user, HttpSession session) {
+        getUser(model, session);
         var savedUser = userService.save(user);
         if (savedUser.isEmpty()) {
             model.addAttribute("message", "Пользователь с такой почтой уже существует");
@@ -41,12 +45,7 @@ public class UserController {
 
     @GetMapping("/login")
     public String getLoginPage(HttpSession session, Model model) {
-        var user = (User) session.getAttribute("user");
-        if (user == null) {
-            user = new User();
-            user.setName("Гость");
-        }
-        model.addAttribute("user", user);
+        getUser(model, session);
         return "users/login";
     }
 
