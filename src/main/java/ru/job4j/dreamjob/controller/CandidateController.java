@@ -1,22 +1,22 @@
 package ru.job4j.dreamjob.controller;
 
-import net.jcip.annotations.ThreadSafe;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import ru.job4j.dreamjob.dto.FileDto;
 import ru.job4j.dreamjob.model.Candidate;
+import ru.job4j.dreamjob.model.User;
 import ru.job4j.dreamjob.service.CandidateService;
 import ru.job4j.dreamjob.service.CityService;
 
-import java.util.Optional;
+import javax.servlet.http.HttpSession;
 
-@ThreadSafe
 @Controller
 @RequestMapping("/candidates")
 public class CandidateController {
     private final CandidateService candidateService;
+
     private final CityService cityService;
 
     public CandidateController(CandidateService candidateService, CityService cityService) {
@@ -24,61 +24,77 @@ public class CandidateController {
         this.cityService = cityService;
     }
 
+    private void getUser(Model model, HttpSession session) {
+        var user = (User) session.getAttribute("user");
+        if (user == null) {
+            user = new User();
+            user.setName("Гость");
+        }
+        model.addAttribute("user", user);
+    }
     @GetMapping
-    public String getModel(Model model) {
+    public String getAll(Model model, HttpSession session) {
         model.addAttribute("candidates", candidateService.findAll());
+        getUser(model, session);
         return "candidates/list";
     }
 
     @GetMapping("/create")
-    public String getCreatePage(Model model) {
+    public String getCreationPage(Model model, HttpSession session) {
         model.addAttribute("cities", cityService.findAll());
+        getUser(model, session);
         return "candidates/create";
     }
 
     @PostMapping("/create")
-    public String create(@ModelAttribute Candidate candidate, @RequestParam MultipartFile file, Model model) {
+    public String create(@ModelAttribute Candidate candidate, @RequestParam MultipartFile file,
+                         Model model, HttpSession session) {
+        getUser(model, session);
         try {
             candidateService.save(candidate, new FileDto(file.getOriginalFilename(), file.getBytes()));
             return "redirect:/candidates";
         } catch (Exception exception) {
             model.addAttribute("message", exception.getMessage());
-            return "error/404";
+            return "errors/404";
         }
     }
 
     @GetMapping("/{id}")
-    public String getById(Model model, @PathVariable int id) {
-        Optional<Candidate> candidateOptional = candidateService.findById(id);
+    public String getById(Model model, @PathVariable int id, HttpSession session) {
+        var candidateOptional = candidateService.findById(id);
+        getUser(model, session);
         if (candidateOptional.isEmpty()) {
-            model.addAttribute("massage", "Кандидат с указанным идентификатором не найден");
+            model.addAttribute("message", "Кандидат не найден");
             return "errors/404";
         }
-        model.addAttribute("candidate", candidateOptional.get());
         model.addAttribute("cities", cityService.findAll());
-        return "candidates/two";
+        model.addAttribute("candidate", candidateOptional.get());
+        return "candidates/one";
     }
 
     @PostMapping("/update")
-    public String update(@ModelAttribute Candidate candidate, @RequestParam MultipartFile file, Model model) {
+    public String update(@ModelAttribute Candidate candidate, @RequestParam MultipartFile file,
+                         Model model, HttpSession session) {
+        getUser(model, session);
         try {
-            boolean isUpdate = candidateService.update(candidate, new FileDto(file.getOriginalFilename(), file.getBytes()));
-            if (!isUpdate) {
-                model.addAttribute("massage", "Кандидат с указанным идентификатором не найден");
-                return "error/404";
+            var isUpdated = candidateService.update(candidate, new FileDto(file.getOriginalFilename(), file.getBytes()));
+            if (!isUpdated) {
+                model.addAttribute("message", "Вакансия с указанным идентификатором не найдена");
+                return "errors/404";
             }
             return "redirect:/candidates";
         } catch (Exception exception) {
             model.addAttribute("message", exception.getMessage());
-            return "error/404";
+            return "errors/404";
         }
     }
 
     @GetMapping("/delete/{id}")
-    public String delete(Model model, @PathVariable int id) {
-        boolean isDeleted = candidateService.deleteById(id);
+    public String delete(Model model, @PathVariable int id, HttpSession session) {
+        var isDeleted = candidateService.deleteById(id);
+        getUser(model, session);
         if (!isDeleted) {
-            model.addAttribute("massage", "Кандидат с указанным идентификатором не найден");
+            model.addAttribute("message", "Кандидат с указанным идентификатором не найден");
             return "errors/404";
         }
         return "redirect:/candidates";
