@@ -14,7 +14,6 @@ import ru.job4j.dreamjob.service.VacancyService;
 import static java.time.LocalDateTime.now;
 import java.util.List;
 import java.util.Optional;
-
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.mockito.Mockito.*;
 
