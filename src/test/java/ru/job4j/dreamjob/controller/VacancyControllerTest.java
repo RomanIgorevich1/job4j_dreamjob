@@ -119,7 +119,7 @@ public class VacancyControllerTest {
         var view = vacancyController.delete(model, anyInt());
         var actualArgument = model.getAttribute("message");
         assertThat(view).isEqualTo("errors/404");
-        assertThat(actualArgument).isEqualTo("Вакансия с указанием идентификатора не найдена");
+        assertThat(actualArgument).isEqualTo("Вакансия с указанным идентификатором не найдена");
     }
 
 
