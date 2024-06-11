@@ -50,7 +50,7 @@ public class VacancyController {
     public String getById(Model model, @PathVariable int id) {
         Optional<Vacancy> vacancyOptional = vacancyService.findById(id);
         if (vacancyOptional.isEmpty()) {
-            model.addAttribute("message", "Вакансия с указанием идентификатора не найдена");
+            model.addAttribute("message", "Вакансия с указанным идентификатором не найдена");
             return "errors/404";
         }
         model.addAttribute("vacancy", vacancyOptional.get());
@@ -64,7 +64,7 @@ public class VacancyController {
         try {
             boolean isUpdated = vacancyService.update(vacancy, new FileDto(file.getOriginalFilename(), file.getBytes()));
             if (!isUpdated) {
-                model.addAttribute("massage", "Вакансия с указанием идентификатора не найдена");
+                model.addAttribute("message", "Вакансия с указанным идентификатором не найдена");
                 return "errors/404";
             }
             return "redirect:/vacancies";
@@ -79,7 +79,7 @@ public class VacancyController {
     public String delete(Model model, @PathVariable int id) {
         boolean isDeleted = vacancyService.deleteById(id);
         if (!isDeleted) {
-            model.addAttribute("massage", "Вакансия с указанием идентификатора не найдена");
+            model.addAttribute("message", "Вакансия с указанным идентификатором не найдена");
             return "errors/404";
         }
         return "redirect:/vacancies";
